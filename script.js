@@ -59,6 +59,12 @@ var createElement = function (type) {
   return document.createElement(type);
 };
 
+var preventDefault = function (event) {
+  if (event.preventDefault) {
+    event.preventDefault();
+  }
+};
+
 var switchType = getElementById('switchType');
 var container = getElementById('container');
 var plane = getElementById('plane');
@@ -422,6 +428,15 @@ var createTile = function (i, j) {
     }
     toggleStateInput();
   });
+  tile.addEventListener('touchmove', function () {
+    if (switchType.value !== 'hover') {
+      return;
+    }
+    toggleStateInput();
+  });
+  tile.addEventListener('touchstart', function () {
+    toggleStateInput();
+  });
   position.style.transform = 'translateX( ' + i * tileSpacing + 'px) translateY( ' + j * tileSpacing + 'px )';
   setStateClass(tile, rotateState);
   return {
@@ -598,6 +613,11 @@ rotationControl.addEventListener('touchcancel', function (e) {
 });
 
 rotationControl.addEventListener('touchmove', rotationControlTouchHandler);
+
+container.addEventListener('touchstart', preventDefault);
+container.addEventListener('touchmove', preventDefault);
+container.addEventListener('touchend', preventDefault);
+container.addEventListener('touchcancel', preventDefault);
 
 if (autoplaying) {
   autoplayCheckbox.checked = true;
