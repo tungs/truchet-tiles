@@ -532,24 +532,36 @@ switchPreset.addEventListener('change', patternChanged);
 var previousRotationLocation = null;
 var rotationLocationMouseDown;
 
+var updateRotationLocation = function (point) {
+  var dx, dy;
+  if (point && previousRotationLocation) {
+    dx = point.x - previousRotationLocation.x;
+    dy = point.y - previousRotationLocation.y;
+    rotateX -= dy;
+    rotateY += dx;
+    updatePlaneTransform();
+  }
+  previousRotationLocation = point;
+};
+
 rotationControl.addEventListener('mousedown', function (e) {
   e.preventDefault();
   rotationLocationMouseDown = true;
-  previousRotationLocation = {
+  updateRotationLocation({
     x: e.screenX,
     y: e.screenY
-  };
+  });
 });
 
 rotationControl.addEventListener('mouseleave', function () {
   rotationLocationMouseDown = false;
-  previousRotationLocation = null;
+  updateRotationLocation(null);
 });
 
 rotationControl.addEventListener('mouseup', function (e) {
   e.preventDefault();
   rotationLocationMouseDown = false;
-  previousRotationLocation = null;
+  updateRotationLocation(null);
 });
 
 rotationControl.addEventListener('mousemove', function (e) {
@@ -557,19 +569,35 @@ rotationControl.addEventListener('mousemove', function (e) {
   if (!rotationLocationMouseDown) {
     return;
   }
-  var dx, dy;
-  if (previousRotationLocation) {
-    dx = e.screenX - previousRotationLocation.x;
-    dy = e.screenY - previousRotationLocation.y;
-    rotateX -= dy;
-    rotateY += dx;
-    updatePlaneTransform();
-  }
-  previousRotationLocation = {
-    x: e.screenX,
-    y: e.screenY
-  };
+  updateRotationLocation({x: e.screenX, y: e.screenY});
 });
+
+var rotationControlTouchHandler = function (e) {
+  e.preventDefault();
+  var touches = e.targetTouches;
+  if (touches && touches.length) {
+    updateRotationLocation({
+      x: touches[0].screenX,
+      y: touches[0].screenY
+    });
+  } else {
+    updateRotationLocation(null);
+  }
+};
+
+rotationControl.addEventListener('touchstart', rotationControlTouchHandler);
+
+rotationControl.addEventListener('touchend', function (e) {
+  e.preventDefault();
+  updateRotationLocation(null);
+});
+
+rotationControl.addEventListener('touchcancel', function (e) {
+  e.preventDefault();
+  updateRotationLocation(null);
+});
+
+rotationControl.addEventListener('touchmove', rotationControlTouchHandler);
 
 if (autoplaying) {
   autoplayCheckbox.checked = true;
