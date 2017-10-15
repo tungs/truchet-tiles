@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns="http://www.w3.org/2000/svg"
+	version="1.0"
+	width="48"
+	height="48">
+	<title>Truchet Tile</title>
+	<path
+		d="M 24,0 A 24,24 0 0 1 0,24 M 48,24 A 24,24 0 0 0 24,48"
+		style="fill:none;stroke:black;stroke-width:6;stroke-linecap:butt" />
+</svg>
