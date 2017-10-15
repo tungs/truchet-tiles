@@ -428,15 +428,16 @@ var createTile = function (i, j) {
     }
     toggleStateInput();
   });
-  tile.addEventListener('touchmove', function () {
-    e.preventDefault();
+  tile.addEventListener('touchenter', function () {
     if (switchType.value !== 'hover') {
       return;
     }
     toggleStateInput();
   });
   tile.addEventListener('touchstart', function () {
-    e.preventDefault();
+    if (switchType.value !== 'click') {
+      return;
+    }
     toggleStateInput();
   });
   position.style.transform = 'translateX( ' + i * tileSpacing + 'px) translateY( ' + j * tileSpacing + 'px )';
@@ -616,10 +617,7 @@ rotationControl.addEventListener('touchcancel', function (e) {
 
 rotationControl.addEventListener('touchmove', rotationControlTouchHandler);
 
-container.addEventListener('touchstart', preventDefault);
 container.addEventListener('touchmove', preventDefault);
-container.addEventListener('touchend', preventDefault);
-container.addEventListener('touchcancel', preventDefault);
 
 if (autoplaying) {
   autoplayCheckbox.checked = true;
