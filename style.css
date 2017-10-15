@@ -54,6 +54,10 @@
   border-radius: 50%;
 }
 
+#rowsInput, #columnsInput {
+  width: 3em;
+}
+
 .tile {
   position: absolute;
   cursor: pointer;
