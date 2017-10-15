@@ -428,13 +428,15 @@ var createTile = function (i, j) {
     }
     toggleStateInput();
   });
-  tile.addEventListener('touchenter', function () {
+  tile.addEventListener('touchenter', function (e) {
+    e.preventDefault();
     if (switchType.value !== 'hover') {
       return;
     }
     toggleStateInput();
   });
-  tile.addEventListener('touchstart', function () {
+  tile.addEventListener('touchstart', function (e) {
+    e.preventDefault();
     if (switchType.value !== 'click') {
       return;
     }
