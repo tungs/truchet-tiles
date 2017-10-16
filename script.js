@@ -428,18 +428,8 @@ var createTile = function (i, j) {
     }
     toggleStateInput();
   });
-  tile.addEventListener('touchenter', function (e) {
-    e.preventDefault();
-    if (switchType.value !== 'hover') {
-      return;
-    }
-    toggleStateInput();
-  });
   tile.addEventListener('touchstart', function (e) {
     e.preventDefault();
-    if (switchType.value !== 'click') {
-      return;
-    }
     toggleStateInput();
   });
   position.style.transform = 'translateX( ' + i * tileSpacing + 'px) translateY( ' + j * tileSpacing + 'px )';
